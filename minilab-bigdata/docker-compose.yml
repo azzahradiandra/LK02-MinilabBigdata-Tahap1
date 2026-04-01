@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  # RDBMS Sumber
+  postgres-source:
+    image: postgres:15
+    container_name: postgres_source
+    environment:
+      POSTGRES_USER: user_admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: db_sumber
+    ports:
+      - "5432:5432"
+
+  # Object Storage (Data Lake)
+  minio:
+    image: minio/minio
+    container_name: minio_storage
+    ports:
+      - "9000:9000" # API Port
+      - "9001:9001" # Console Port (GUI)
+    environment:
+      MINIO_ROOT_USER: admin_minio
+      MINIO_ROOT_PASSWORD: password_minio
+    command: server /data --console-address ":9001"
